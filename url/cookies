@@ -2,16 +2,27 @@
 ;; Automatically generated file!!! DO NOT EDIT!!!
 
 (setq url-cookie-storage
- '(("hatena.ne.jp"
-  [url-cookie "b" "$1$Isps1p4T$qF7AeRhepWrvVDJV/fSOh0" "25-Apr-2038 11:02:48.00 GMT" "/" "hatena.ne.jp" nil])
+ '((".google.com"
+  [url-cookie "CGIC" "IgMqLyo" "Sat, 30-Jan-2021 01:46:26 GMT" "/search" ".google.com" nil]
+  [url-cookie "CGIC" "IgMqLyo" "Sat, 30-Jan-2021 01:46:26 GMT" "/complete/search" ".google.com" nil]
+  [url-cookie "NID" "204=xcxXqJIiQbsGmdMxrTUPA8bKy2tphdTNSvXex0iZhqNZMA79XhhWIut_0XTpuOxwgyfTucQ7mqoz5AlGYE91StvRn-9-5Nwo_ukEPOgcO0AWNGzKMXhQAyRtgCpQrLhFb0IOSOKE2AMTccKvu8SouWkLnLXOO88tSIb57DHpb64" "Tue, 02-Feb-2021 01:46:26 GMT" "/" ".google.com" nil])
+ ("www.keyence.co.jp"
+  [url-cookie "Apache" "117.104.136.139.1591236150173031" "Mon, 29-May-45 02:02:30 GMT" "/" "www.keyence.co.jp" nil])
  (".hatena.ne.jp"
   [url-cookie "b" "$1$QkNxkO93$ereToAJpm9H3zH6SrnsoD/" "25 Apr 38 11:02:48 [GMT]" "/" ".hatena.ne.jp" nil])
- (".google.com"
-  [url-cookie "HttpOnly" nil "30-Oct-2018 11:02:30.00 GMT" "/" ".google.com" nil]
-  [url-cookie "NID" "129=qbKtHUB_smxMQkQJA7cX9gUdZvfJEC1NATINIpTeJYrfZPDDFwx9MpsMu2OvOeK-2Jvd-I0i78j1ffhXxOqzpHG4pQxuYaraBwFjK3UnCIbjSiLvDYC1ZbOrAf2g41d1" "30-Oct-2018 11:02:30.00 GMT" "/" ".google.com" nil]))
+ (".google.co.jp"
+  [url-cookie "CGIC" "IgMqLyo" "Fri, 23-Oct-2020 23:50:53 GMT" "/complete/search" ".google.co.jp" nil]
+  [url-cookie "CGIC" "IgMqLyo" "Fri, 23-Oct-2020 23:50:53 GMT" "/search" ".google.co.jp" nil]
+  [url-cookie "NID" "203=Yg81vpcsIuMUA9VCNmRRX2quWbGxBx42zRnjOmMqXfMg1iS8IEGe94aqUrhpeIbENPHviKxHIHAkYsbUSjmrYQxfNAnuE9rtTHKc2o_OulKug0-B21tVbRJnavosY6YmGND58afJzBB836hqYGjVWXeiryQZh5xaS93oV1NF6J4" "Mon, 26-Oct-2020 23:50:53 GMT" "/" ".google.co.jp" nil])
+ ("hatena.ne.jp"
+  [url-cookie "b" "$1$Isps1p4T$qF7AeRhepWrvVDJV/fSOh0" "25-Apr-2038 11:02:48.00 GMT" "/" "hatena.ne.jp" nil]))
 )
 (setq url-cookie-secure-storage
- 'nil)
+ '((".google.co.jp"
+  [url-cookie "1P_JAR" "2020-08-19-07" "Fri, 18-Sep-2020 07:55:57 GMT" "/" ".google.co.jp" t])
+ (".google.com"
+  [url-cookie "1P_JAR" "2020-08-03-01" "Wed, 02-Sep-2020 01:46:26 GMT" "/" ".google.com" t]))
+)
 
 ;; Local Variables:
 ;; version-control: never
