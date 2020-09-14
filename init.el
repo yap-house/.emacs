@@ -11,6 +11,11 @@
 
 (add-to-load-path "elisp")
 
+(setenv "PATH"
+        (concat "/Users/takama/.nodebrew/current/bin/:"
+                (getenv "PATH")))
+(setq exec-path (parse-colon-path (getenv "PATH")))
+
 ;; Include any packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'package)
@@ -31,6 +36,12 @@
 (require 'ace-link)
 (require 'eww)
 (require 'xah-lookup)
+(require 'flycheck)
+
+;; Default directory
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq default-directory "~/")
+(setq command-line-default-directory "~/")
 
 ;; Package manager
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -166,8 +177,7 @@
   (let ((window-obj (selected-window))
         (current-width (window-width))
         (current-height (window-height))
-        (dx (if (= (nth 0 (window-edges)) 0) 1
-              -1))
+        (dx (if (= (nth 0 (window-edges)) 0) 1 -1))
         (dy (if (= (nth 1 (window-edges)) 0) 1 -1)) c)
     (catch 'end-flag
       (while t
@@ -283,13 +293,11 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes (quote (gnupack-dark)))
+ '(custom-enabled-themes '(gnupack-dark))
  '(custom-safe-themes
-   (quote
-    ("1d1c7afb6cbb5a8a8fb7eb157a4aaf06805215521c2ab841bd2c4a310ce3781e" default)))
+   '("1d1c7afb6cbb5a8a8fb7eb157a4aaf06805215521c2ab841bd2c4a310ce3781e" default))
  '(package-selected-packages
-   (quote
-    (php-mode vue-mode multiple-cursors web-mode helm company ht f dash magit s markdown-mode emmet-mode sass-mode xah-lookup scss-mode google-translate ace-link))))
+   '(js2-mode flycheck php-mode vue-mode multiple-cursors web-mode helm company ht f dash magit s markdown-mode emmet-mode sass-mode xah-lookup scss-mode google-translate ace-link)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -304,6 +312,7 @@
 (add-to-list 'auto-mode-alist '("\\.ejs$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.vue$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.php$" . web-mode))
 
 (defun my-web-mode-hook ()
   "Hooks for Web mode"
@@ -523,6 +532,25 @@ Version 2017-02-09"
 
 (put 'xah-lookup-php 'xah-lookup-url "http://php.net/word02051")
 (put 'xah-lookup-php 'xah-lookup-browser-function xah-lookup-browser-function)
+
+;; flycheck
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(global-flycheck-mode)
+(flycheck-define-checker textlint
+  "A linter for Markdown."
+  :command ("textlint" "--format" "unix" source)
+  :error-patterns
+  ((warning line-start (file-name) ":" line ":" column ": "
+            (id (one-or-more (not (any " "))))
+            (message (one-or-more not-newline)
+                     (zero-or-more "\n" (any " ") (one-or-more not-newline)))
+            line-end))
+  :modes (text-mode markdown-mode gfm-mode))
+ 
+(add-hook 'markdown-mode-hook
+          '(lambda ()
+             (setq flycheck-checker 'textlint)
+             (flycheck-mode 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Other settings
