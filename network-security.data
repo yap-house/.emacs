@@ -1,4 +1,0 @@
-(
- (:id "sha1:6ef278652029c19bbbc132824fb82a28548df8e5" :fingerprint "sha1:14:60:95:34:79:0a:42:da:b1:a4:ba:47:51:6d:43:0d:f1:15:da:52" :host "updates.cocolog-nifty.com:443" :conditions (:unknown-ca :invalid))
- (:id "sha1:85457c729378cc93c732b6a3941c8e4f9c2e60f3" :fingerprint "sha1:ab:a6:d7:6a:b3:d3:63:fa:19:0d:65:41:60:23:6e:ef:d3:2a:46:dc" :host "marmalade-repo.org:443" :conditions (:expired :unknown-ca :invalid))
-)
