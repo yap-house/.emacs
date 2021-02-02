@@ -11,9 +11,6 @@
 
 (add-to-load-path "elisp")
 
-(setenv "PATH"
-        (concat "/Users/takama/.nodebrew/current/bin/:"
-                (getenv "PATH")))
 (setq exec-path (parse-colon-path (getenv "PATH")))
 
 ;; Include any packages
