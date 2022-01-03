@@ -483,20 +483,37 @@
 ;; whitespace - 空白の強調表示
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (leaf whitespace
-  :blackout ((global-whitespace-mode . "")
-             (whitespace-mode . ""))
-  :hook (after-init-hook . global-whitespace-mode)
-  :custom
-  ((whitespace-line-column . 72)
-   (whitespace-style '(face trailing tabs spaces))
-   (whitespace-display-mappings . '((space-mark ?\u3000 [?\□])
-                                    (tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t])))
-   (whitespace-space-regexp . "\\(\u3000+\\)")
-   (whitespace-global-modes . '(not eww-mode
-                                    term-mode
-                                    eshell-mode
-                                    org-agenda-mode
-                                    calendar-mode))))
+  :ensure t
+  :commands whitespace-mode
+  :bind ("C-c W" . whitespace-cleanup)
+  :custom ((whitespace-style . '(face
+                                 trailing
+                                 tabs
+                                 spaces
+                                 empty
+                                 space-mark
+                                 tab-mark))
+           (whitespace-display-mappings . '((space-mark ?\u3000 [?\u25a1])
+                                            (tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t])))
+           (whitespace-space-regexp . "\\(\u3000+\\)")
+           (whitespace-global-modes . '(emacs-lisp-mode shell-script-mode sh-mode python-mode org-mode))
+           (global-whitespace-mode . t))
+
+  :config
+  (set-face-attribute 'whitespace-trailing nil
+                      :background "Black"
+                      :foreground "DeepPink"
+                      :underline t)
+  (set-face-attribute 'whitespace-tab nil
+                      :background "Black"
+                      :foreground "LightSkyBlue"
+                      :underline t)
+  (set-face-attribute 'whitespace-space nil
+                      :background "Black"
+                      :foreground "GreenYellow"
+                      :weight 'bold)
+  (set-face-attribute 'whitespace-empty nil
+                      :background "Black"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; hiwin - 未選択ウィンドウの色を変える
@@ -858,6 +875,44 @@
          (treemacs-set-scope-type 'Perspectives)
          t))))
 
+(leaf yasnippet
+  :ensure t
+  :blackout yas-minor-mode
+  :defun (yatemplate-fill-alist
+          company-mode/backend-with-yas)
+  :custom ((yas-indent-line . 'fixed)
+           (yas-global-mode . t))
+
+  :bind ((yas-keymap
+          ("<tab>" . nil))
+         (yas-minor-mode-map
+          ("C-c y i" . yas-insert-snippet)
+          ("C-c y n" . yas-new-snippet)
+          ("C-c y v" . yas-visit-snippet-file)
+          ("C-c y l" . yas-describe-tables)
+          ("C-c y g" . yas-reload-all)))
+  :config
+  (leaf yasnippet-snippets :ensure t)
+
+  (leaf yatemplate
+    :ensure t
+    :config
+    (yatemplate-fill-alist))
+
+  (defvar company-mode/enable-yas t
+    "Enable yasnippet for all backends.")
+
+  (defun company-mode/backend-with-yas (backend)
+    (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+        backend
+      (append (if (consp backend) backend (list backend))
+              '(:with company-yasnippet))))
+
+  (defun set-yas-as-company-backend ()
+    (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
+  :hook
+  ((company-mode-hook . set-yas-as-company-backend)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Calendar
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1101,6 +1156,40 @@
                (setq tab-width 2)
                (setq indent-tabs-mode nil)
                (setq c-basic-offset 2))))
+
+(leaf highlight-indent-guides
+  :ensure t
+  :blackout t
+  :hook (((prog-mode-hook yaml-mode-hook) . highlight-indent-guides-mode))
+  :custom (
+           (highlight-indent-guides-method . 'character)
+           (highlight-indent-guides-auto-enabled . t)
+           (highlight-indent-guides-responsive . t)
+           (highlight-indent-guides-character . ?\|)))
+
+(leaf rainbow-delimiters
+  :ensure t
+  :hook
+  ((prog-mode-hook . rainbow-delimiters-mode)))
+
+(leaf py-isort :ensure t)
+
+(leaf elpy
+  :ensure t
+  :defun (elpy-enable)
+  :init
+  (elpy-enable)
+
+  :config
+  (remove-hook 'elpy-modules 'elpy-module-highlight-indentation)
+  (remove-hook 'elpy-modules 'elpy-module-flymake)
+
+  :custom
+  (flycheck-python-flake8-executable . "flake8")
+
+  :bind (elpy-mode-map
+         ("C-c C-r f" . elpy-format-code))
+  :hook ((elpy-mode-hook . flycheck-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Markdown

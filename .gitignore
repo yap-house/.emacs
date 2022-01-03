@@ -69,3 +69,9 @@ flycheck_*.el
 
 # Undo-tree save-files
 *.~undo-tree
+emojis/
+abbrev_defs
+.mc-lists.el
+kkcrc
+init.*.el
+recentf
